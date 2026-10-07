@@ -18,6 +18,13 @@ jobs:
       success: ${{ steps.renew_run.outcome == 'success' && 'true' || 'false' }}
 
     steps:
+      - name: 打印当前时间（UTC/BJT）
+        run: |
+          echo "========================================="
+          echo "UTC 时间: $(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "北京时间: $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "========================================="
+
       - name: 拉取仓库
         uses: actions/checkout@v4
 
@@ -82,6 +89,13 @@ jobs:
       contents: read
 
     steps:
+      - name: 打印当前时间（UTC/BJT）
+        run: |
+          echo "========================================="
+          echo "重试任务 - UTC 时间: $(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "重试任务 - 北京时间: $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "========================================="
+
       - name: 等待 60 秒（让 IP 封锁冷却）
         run: sleep 60
 
